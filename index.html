@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Homies Menü</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #fff;
+      margin: 0;
+      padding: 0;
+      color: #111;
+    }
+    header {
+      padding: 2rem;
+      text-align: center;
+      border-bottom: 1px solid #eee;
+    }
+    header img {
+      max-height: 80px;
+    }
+    .controls {
+      max-width: 900px;
+      margin: 1rem auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .controls input, .controls select {
+      flex: 1;
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 1rem;
+    }
+    h2 {
+      margin-top: 2rem;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 0.5rem;
+    }
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1rem;
+    }
+    .item {
+      border: 1px solid #ddd;
+      padding: 1rem;
+      border-radius: 8px;
+      background: #f9f9f9;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <img src="homies-logo.png" alt="Homies Logo">
+</header>
+<div class="controls">
+  <input type="text" id="search" placeholder="Search">
+  <select id="category">
+    <option value="All">All</option>
+    <option value="Hot Beverages">Hot Beverages</option>
+    <option value="Cold Beverages">Cold Beverages</option>
+    <option value="Desserts">Desserts</option>
+    <option value="Beers">Beers</option>
+    <option value="Cocktails">Cocktails</option>
+    <option value="VINE & PROSECCO">VINE & PROSECCO</option>
+    <option value="Homies Cocktails">Homies Cocktails</option>
+  </select>
+</div>
+<div class="container" id="menu"></div>
+
+<script>
+const items = [
+  { name: "TÜRK KAHVESİ", price: 120, category: "Hot Beverages" },
+  { name: "TÜRK KAHVESİ Double", price: 200, category: "Hot Beverages" },
+  { name: "ESPRESSO SHOT", price: 130, category: "Hot Beverages" },
+  { name: "FLAT WHITE", price: 180, category: "Hot Beverages" },
+  { name: "ICE LATTE", price: 230, category: "Hot Beverages" },
+  { name: "LATTE", price: 180, category: "Hot Beverages" },
+  { name: "KIŞ ÇAYI", price: 100, category: "Hot Beverages" },
+  { name: "YEŞİL ÇAY", price: 100, category: "Hot Beverages" },
+  { name: "KEDİ DİLLİ TİRAMİSU", price: 180, category: "Desserts" },
+  { name: "LİMONLU CHEESECAKE", price: 250, category: "Desserts" },
+  { name: "ÇİKOLATALI PASTA", price: 200, category: "Desserts" },
+  { name: "CARLSBERG FIÇI 50cl", price: 200, category: "Beers" },
+  { name: "CARLSBERG FIÇI 33cl", price: 180, category: "Beers" },
+  { name: "TUBORG FIÇI 50cl", price: 180, category: "Beers" },
+  { name: "Heavy Biscuit", price: 180, category: "Homies Cocktails" },
+];
+
+function renderMenu() {
+  const container = document.getElementById("menu");
+  container.innerHTML = "";
+  const searchTerm = document.getElementById("search").value.toLowerCase();
+  const selectedCategory = document.getElementById("category").value;
+  const grouped = {};
+
+  items.forEach(item => {
+    if (
+      (selectedCategory === "All" || item.category === selectedCategory) &&
+      item.name.toLowerCase().includes(searchTerm)
+    ) {
+      if (!grouped[item.category]) grouped[item.category] = [];
+      grouped[item.category].push(item);
+    }
+  });
+
+  for (const cat in grouped) {
+    const title = document.createElement("h2");
+    title.textContent = cat;
+    container.appendChild(title);
+
+    const grid = document.createElement("div");
+    grid.className = "menu-grid";
+    grouped[cat].forEach(({ name, price }) => {
+      const div = document.createElement("div");
+      div.className = "item";
+      div.innerHTML = `<h4>${name}</h4><p>₺${price}</p>`;
+      grid.appendChild(div);
+    });
+    container.appendChild(grid);
+  }
+}
+
+document.getElementById("search").addEventListener("input", renderMenu);
+document.getElementById("category").addEventListener("change", renderMenu);
+renderMenu();
+</script>
+</body>
+</html>
