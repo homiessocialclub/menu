@@ -518,15 +518,34 @@ const items = [
 
 ];
 
+function filterSoftAndHotDrinks() {
+  const currentHour = new Date().getHours();
+  const categorySelect = document.getElementById("category");
+
+  ["Cold Beverages", "Hot Beverages"].forEach(cat => {
+    const option = [...categorySelect.options].find(opt => opt.value === cat);
+    if (option) {
+      option.style.display = (currentHour >= 22 || currentHour < 5) ? "none" : "block";
+    }
+  });
+}
+
 function renderMenu() {
   const container = document.getElementById("menu");
   container.innerHTML = "";
   const searchTerm = document.getElementById("search").value.toLowerCase();
   const selectedCategory = document.getElementById("category").value;
+
+  const currentHour = new Date().getHours();
   const grouped = {};
 
   items.forEach(item => {
+    const isSoftDrink = item.category === "Cold Beverages";
+    const isHotDrink = item.category === "Hot Beverages";
+    const isNightTime = currentHour >= 22 || currentHour < 5;
+
     if (
+      (!isNightTime || (!isSoftDrink && !isHotDrink)) &&
       (selectedCategory === "All" || item.category === selectedCategory) &&
       item.name.toLowerCase().includes(searchTerm)
     ) {
@@ -554,7 +573,7 @@ function renderMenu() {
 
 document.getElementById("search").addEventListener("input", renderMenu);
 document.getElementById("category").addEventListener("change", renderMenu);
+
+filterSoftAndHotDrinks();
 renderMenu();
 </script>
-</body>
-</html>
