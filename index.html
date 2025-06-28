@@ -535,17 +535,16 @@ function renderMenu() {
   container.innerHTML = "";
   const searchTerm = document.getElementById("search").value.toLowerCase();
   const selectedCategory = document.getElementById("category").value;
-
   const currentHour = new Date().getHours();
+
+  const hiddenCategories = (currentHour >= 22 || currentHour < 5)
+    ? ["Cold Beverages", "Hot Beverages", "Desserts"]
+    : [];
+
   const grouped = {};
-
   items.forEach(item => {
-    const isSoftDrink = item.category === "Cold Beverages";
-    const isHotDrink = item.category === "Hot Beverages";
-    const isNightTime = currentHour >= 22 || currentHour < 5;
-
     if (
-      (!isNightTime || (!isSoftDrink && !isHotDrink)) &&
+      !hiddenCategories.includes(item.category) &&
       (selectedCategory === "All" || item.category === selectedCategory) &&
       item.name.toLowerCase().includes(searchTerm)
     ) {
