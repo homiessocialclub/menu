@@ -522,11 +522,39 @@ function filterSoftAndHotDrinks() {
   const currentHour = new Date().getHours();
   const categorySelect = document.getElementById("category");
 
-  ["Cold Beverages", "Hot Beverages", "Desserts"].forEach(cat => {
-    const option = [...categorySelect.options].find(opt => opt.value === cat);
-    if (option) {
+  const orderedCategories = [
+    "All",
+    "Homies Cocktails",
+    "Cocktails",
+    "Gın",
+    "Viski",
+    "Votka",
+    "TEKİLA & MEZCAL",
+    "VERMUT",
+    "RUM",
+    "COGNAC",
+    "LICOR",
+    "VINE & PROSECCO",
+    "Beers",
+    "Hot Beverages",
+    "Cold Beverages",
+    "Desserts",
+    "SNACKS"
+  ];
+
+  categorySelect.innerHTML = "";
+
+  orderedCategories.forEach(cat => {
+    const option = document.createElement("option");
+    option.value = cat;
+    option.textContent = cat;
+
+    if (["Cold Beverages", "Hot Beverages", "Desserts"].includes(cat)) {
+      const currentHour = new Date().getHours();
       option.style.display = (currentHour >= 22 || currentHour < 5) ? "none" : "block";
     }
+
+    categorySelect.appendChild(option);
   });
 }
 
@@ -553,21 +581,42 @@ function renderMenu() {
     }
   });
 
-  for (const cat in grouped) {
-    const title = document.createElement("h2");
-    title.textContent = cat;
-    container.appendChild(title);
+  const displayOrder = [
+    "Homies Cocktails",
+    "Cocktails",
+    "Gın",
+    "Viski",
+    "Votka",
+    "TEKİLA & MEZCAL",
+    "VERMUT",
+    "RUM",
+    "COGNAC",
+    "LICOR",
+    "VINE & PROSECCO",
+    "Beers",
+    "Hot Beverages",
+    "Cold Beverages",
+    "Desserts",
+    "SNACKS"
+  ];
 
-    const grid = document.createElement("div");
-    grid.className = "menu-grid";
-    grouped[cat].forEach(({ name, price }) => {
-      const div = document.createElement("div");
-      div.className = "item";
-      div.innerHTML = `<h4>${name}</h4><p>₺${price}</p>`;
-      grid.appendChild(div);
-    });
-    container.appendChild(grid);
-  }
+  displayOrder.forEach(cat => {
+    if (grouped[cat]) {
+      const title = document.createElement("h2");
+      title.textContent = cat;
+      container.appendChild(title);
+
+      const grid = document.createElement("div");
+      grid.className = "menu-grid";
+      grouped[cat].forEach(({ name, price }) => {
+        const div = document.createElement("div");
+        div.className = "item";
+        div.innerHTML = `<h4>${name}</h4><p>₺${price}</p>`;
+        grid.appendChild(div);
+      });
+      container.appendChild(grid);
+    }
+  });
 }
 
 document.getElementById("search").addEventListener("input", renderMenu);
