@@ -522,7 +522,7 @@ function filterSoftAndHotDrinks() {
   const currentHour = new Date().getHours();
   const categorySelect = document.getElementById("category");
 
-  ["Cold Beverages", "Hot Beverages"].forEach(cat => {
+  ["Cold Beverages", "Hot Beverages", "Desserts"].forEach(cat => {
     const option = [...categorySelect.options].find(opt => opt.value === cat);
     if (option) {
       option.style.display = (currentHour >= 22 || currentHour < 5) ? "none" : "block";
