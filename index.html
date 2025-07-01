@@ -12,83 +12,82 @@
       padding: 0;
       color: #111;
     }
-    header {
-      padding: 2rem;
-      text-align: center;
-      border-bottom: 1px solid #eee;
-    }
-    header img {
-      max-height: 80px;
-    }
-    .sticky-controls {
+
+    .sticky-header {
       position: sticky;
       top: 0;
+      z-index: 1100;
+      background: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0.5rem 0;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .sticky-header img {
+      height: 60px;
+      transition: height 0.3s ease;
+    }
+
+    .sticky-controls {
+      position: sticky;
+      top: 70px;
       background: #fff;
       z-index: 1000;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     }
+
     .controls {
       max-width: 900px;
-      margin: 1rem auto;
+      margin: 0 auto;
       display: flex;
       justify-content: space-between;
       gap: 1rem;
-      padding: 1rem;
+      padding: 0.5rem 1rem;
     }
-    .controls select {
-      -webkit-appearance: none;  
-      -moz-appearance: none;    
-      appearance: none;          
-      
-      background: #f9f9f9;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      padding: 0.5rem 2.5rem 0.5rem 0.5rem;
-      font-size: 1rem;
-      font-family: inherit;
-      color: #111;
-    
-      /* Custom dropdown arrow */
-      background-image: url('data:image/svg+xml;utf8,<svg fill="%23666" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
-      background-repeat: no-repeat;
-      background-position: right 0.75rem center;
-      background-size: 1rem;
-    }
-    .controls input, .controls select {
+
+    .controls select, .controls input {
       flex: 1;
       padding: 0.5rem;
       font-size: 1rem;
     }
+
     .container {
       max-width: 900px;
       margin: auto;
       padding: 1rem;
     }
+
     h2 {
       margin-top: 2rem;
       border-bottom: 1px solid #ccc;
       padding-bottom: 0.5rem;
     }
+
     .menu-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
       gap: 1rem;
     }
+
     .item {
       border: 1px solid #ddd;
       padding: 1rem;
       border-radius: 8px;
       background: #f9f9f9;
     }
+
     .hidden {
       display: none;
     }
   </style>
 </head>
 <body>
-<header>
+<div class="sticky-header">
   <img src="homies-logo.png" alt="Homies Logo">
-</header>
+</div>
 <div class="sticky-controls">
   <div class="controls">
     <input type="text" id="search" placeholder="Search">
@@ -111,10 +110,6 @@
       <option value="Licor">Licor</option>
       <option value="Lil' Bites">Lil' Bites</option>
       <option value="Shot">Shot</option>
-
-
-
-
     </select>
   </div>
 </div>
