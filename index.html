@@ -13,33 +13,38 @@
       color: #111;
     }
     header {
-      padding: 2rem;
+      position: sticky;
+      top: 0;
+      background: #fff;
+      z-index: 1100;
       text-align: center;
-      border-bottom: 1px solid #eee;
+      padding: 0;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
     header img {
-      max-height: 80px;
+      max-height: 100px;
+      display: block;
+      margin: auto;
     }
     .sticky-controls {
       position: sticky;
-      top: 0;
+      top: 100px;
       background: #fff;
       z-index: 1000;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     }
     .controls {
       max-width: 900px;
-      margin: 1rem auto;
+      margin: 0 auto;
       display: flex;
       justify-content: space-between;
       gap: 1rem;
-      padding: 1rem;
+      padding: 0;
     }
     .controls select {
       -webkit-appearance: none;  
       -moz-appearance: none;    
       appearance: none;          
-      
       background: #f9f9f9;
       border: 1px solid #ccc;
       border-radius: 6px;
@@ -47,8 +52,6 @@
       font-size: 1rem;
       font-family: inherit;
       color: #111;
-    
-      /* Custom dropdown arrow */
       background-image: url('data:image/svg+xml;utf8,<svg fill="%23666" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
       background-repeat: no-repeat;
       background-position: right 0.75rem center;
@@ -94,27 +97,6 @@
     <input type="text" id="search" placeholder="Search">
     <select id="category">
       <option value="All">All</option>
-      <option value="Hot Beverages">Hot Beverages</option>
-      <option value="Cold Beverages">Cold Beverages</option>
-      <option value="Desserts">Desserts</option>
-      <option value="Beers">Beers</option>
-      <option value="Cocktails">Cocktails</option>
-      <option value="Wine & Prosecco">Wine & Prosecco</option>
-      <option value="Artisan Cocktails">Artisan Cocktails</option>
-      <option value="Gin">Gin</option>
-      <option value="Whisky">Whisky</option>
-      <option value="Vodka">Vodka</option>
-      <option value="Tequila & Mezcal">Tequila & Mezcal</option>
-      <option value="Vermouth">Vermouth</option>
-      <option value="Rum">Rum</option>
-      <option value="Cognac">Cognac</option>
-      <option value="Licor">Licor</option>
-      <option value="Lil' Bites">Lil' Bites</option>
-      <option value="Shot">Shot</option>
-
-
-
-
     </select>
   </div>
 </div>
