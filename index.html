@@ -379,7 +379,28 @@ const items = [
 ];
 
 function filterSoftAndHotDrinks() {
-  const currentHour = new Date().getHours();
+  const now = new Date();
+  const currentHour = now.getHours();
+  const currentDayIndex = now.getDay();
+
+  let shouldFilter = false;
+  let hideDraftBeers = false;
+
+  if (
+    (currentDayIndex === 4 && currentHour >= 18) ||
+    (currentDayIndex === 5 && currentHour >= 18)
+  ) {
+    shouldFilter = true;
+  }
+
+  if (
+    (currentDayIndex === 6 && currentHour >= 22) ||
+    (currentDayIndex === 0 && currentHour < 5)
+  ) {
+    shouldFilter = true;
+    hideDraftBeers = true;
+  }
+
   const categorySelect = document.getElementById("category");
 
   const orderedCategories = [
@@ -410,30 +431,56 @@ function filterSoftAndHotDrinks() {
     option.value = cat;
     option.textContent = cat;
 
-    if (["Cold Beverages", "Hot Beverages", "Desserts"].includes(cat)) {
-      const currentHour = new Date().getHours();
-      option.style.display = (currentHour >= 22 || currentHour < 5) ? "none" : "block";
+    if (shouldFilter && ["Cold Beverages", "Hot Beverages", "Desserts"].includes(cat)) {
+      option.style.display = "none";
     }
 
     categorySelect.appendChild(option);
   });
+
+  window._homiesFilterFlags = { shouldFilter, hideDraftBeers };
 }
 
 function renderMenu() {
   const container = document.getElementById("menu");
   container.innerHTML = "";
+
   const searchTerm = document.getElementById("search").value.toLowerCase();
   const selectedCategory = document.getElementById("category").value;
-  const currentHour = new Date().getHours();
 
-  const hiddenCategories = (currentHour >= 22 || currentHour < 5)
-    ? ["Cold Beverages", "Hot Beverages", "Desserts"]
-    : [];
+  const now = new Date();
+  const currentHour = now.getHours();
+  const currentDayIndex = now.getDay();
+
+  let shouldFilter = false;
+  let hideDraftBeers = false;
+
+  if (
+    (currentDayIndex === 4 && currentHour >= 18) ||
+    (currentDayIndex === 5 && currentHour >= 18)
+  ) {
+    shouldFilter = true;
+  }
+
+  if (
+    (currentDayIndex === 6 && currentHour >= 22) ||
+    (currentDayIndex === 0 && currentHour < 5)
+  ) {
+    shouldFilter = true;
+    hideDraftBeers = true;
+  }
+
+  const hiddenCategories = shouldFilter ? ["Cold Beverages", "Hot Beverages", "Desserts"] : [];
 
   const grouped = {};
   items.forEach(item => {
+    const isDraftBeer = item.category === "Beers" && item.name.toUpperCase().includes("DRAFT");
+    const isHiddenCategory = hiddenCategories.includes(item.category);
+    const isFilteredDraft = hideDraftBeers && isDraftBeer;
+
     if (
-      !hiddenCategories.includes(item.category) &&
+      !isHiddenCategory &&
+      !isFilteredDraft &&
       (selectedCategory === "All" || item.category === selectedCategory) &&
       item.name.toLowerCase().includes(searchTerm)
     ) {
