@@ -104,24 +104,24 @@
 
 <script>
 const items = [
-  { name: "TÜRK KAHVESİ", price: 150, category: "Hot Beverages" },
-  { name: "ESPRESSO SHOT", price: 150, category: "Hot Beverages" },
-  { name: "DOPIO", price: 170, category: "Hot Beverages" },
-  { name: "AMERICANO", price: 170, category: "Hot Beverages" },
-  { name: "CAPPUCINO", price: 190, category: "Hot Beverages" },
-  { name: "FLAT WHITE", price: 190, category: "Hot Beverages" },
-  { name: "MOCHA", price: 240, category: "Hot Beverages" },
-  { name: "ICE AMERICANO", price: 200, category: "Hot Beverages" },
-  { name: "ICE LATTE", price: 230, category: "Hot Beverages" },
-  { name: "ESPRESSO TONIC", price: 220, category: "Hot Beverages" },
-  { name: "CORTADO", price: 180, category: "Hot Beverages" },
-  { name: "LATTE", price: 190, category: "Hot Beverages" },
-  { name: "ICE MOCHA", price: 280, category: "Hot Beverages" },
-  { name: "OJ ESPRESSO", price: 280, category: "Hot Beverages" },
-  { name: "KIŞ ÇAYI", price: 150, category: "Hot Beverages" },
-  { name: "YEŞİL ÇAY", price: 150, category: "Hot Beverages" },
-{ name: "BİTKİSEL SÜT", price: 50, category: "Hot Beverages" },
-{ name: "EKSTRA ŞURUP", price: 50, category: "Hot Beverages" },
+  { name: "TÜRK KAHVESİ", price: 150, category: "Coffees" },
+  { name: "ESPRESSO SHOT", price: 150, category: "Coffees" },
+  { name: "DOPIO", price: 170, category: "Coffees" },
+  { name: "AMERICANO", price: 170, category: "Coffees" },
+  { name: "CAPPUCINO", price: 190, category: "Coffees" },
+  { name: "FLAT WHITE", price: 190, category: "Coffees" },
+  { name: "MOCHA", price: 240, category: "Coffees" },
+  { name: "ICE AMERICANO", price: 200, category: "Coffees" },
+  { name: "ICE LATTE", price: 230, category: "Coffees" },
+  { name: "ESPRESSO TONIC", price: 220, category: "Coffees" },
+  { name: "CORTADO", price: 180, category: "Coffees" },
+  { name: "LATTE", price: 190, category: "Coffees" },
+  { name: "ICE MOCHA", price: 280, category: "Coffees" },
+  { name: "OJ ESPRESSO", price: 280, category: "Coffees" },
+{ name: "BİTKİSEL SÜT", price: 50, category: "Coffees" },
+{ name: "EKSTRA ŞURUP", price: 50, category: "Coffees" },
+  { name: "KIŞ ÇAYI", price: 150, category: "Coffees" },
+  { name: "YEŞİL ÇAY", price: 150, category: "Coffees" },
   { name: "KEDİ DİLLİ TİRAMİSU", price: 250, category: "Desserts" },
   { name: "LİMONLU CHEESECAKE", price: 250, category: "Desserts" },
   { name: "ORMAN MEYVELİ TURTA", price: 250, category: "Desserts" },
@@ -419,7 +419,7 @@ function filterSoftAndHotDrinks() {
     "Licor",
     "Wine & Prosecco",
     "Beers",
-    "Hot Beverages",
+    "Coffees",
     "Cold Beverages",
     "Desserts",
     "Lil' Bites",
@@ -433,7 +433,7 @@ function filterSoftAndHotDrinks() {
     option.value = cat;
     option.textContent = cat;
 
-    if (shouldFilter && ["Cold Beverages", "Hot Beverages", "Desserts"].includes(cat)) {
+    if (shouldFilter && ["Cold Beverages", "Coffees", "Desserts"].includes(cat)) {
       option.style.display = "none";
     }
 
@@ -472,7 +472,7 @@ function renderMenu() {
     hideDraftBeers = true;
   }
 
-  const hiddenCategories = shouldFilter ? ["Cold Beverages", "Hot Beverages", "Desserts"] : [];
+  const hiddenCategories = shouldFilter ? ["Cold Beverages", "Coffees", "Desserts"] : [];
 
   const grouped = {};
   items.forEach(item => {
@@ -504,7 +504,7 @@ function renderMenu() {
     "Licor",
     "Wine & Prosecco",
     "Beers",
-    "Hot Beverages",
+    "Coffees",
     "Cold Beverages",
     "Desserts",
     "Lil' Bites",
