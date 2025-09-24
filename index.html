@@ -213,6 +213,9 @@ const items = [
 { name: "TALLERO", price: 400, category: "Wine & Prosecco" },
 { name: "MOET & CHANDON IMPERIAL (Bottle)", price: 10000, category: "Wine & Prosecco" },
 { name: "CINZANO PROSECCO", price: 5500, category: "Wine & Prosecco" },
+{ name: "7 BİLGELER ANAXAGORAS 2024 CHARDONNAY (Bottle)", price: 3500, category: "Wine & Prosecco" },
+{ name: "7 BİLGELER LASOS 2024 KARASAKIZ (Bottle)", price: 3500, category: "Wine & Prosecco" },
+{ name: "7 BİLGELER PITTAKOS 2022 CABERNET SAUVIGNON, MERLOT (Bottle)", price: 3500, category: "Wine & Prosecco" },
   { name: "BEEFEATER", price: 500, category: "Gin" },
 { name: "BEEFEATER BLOOD ORANGE", price: 500, category: "Gin" },
 { name: "BEEFEATER PINK", price: 500, category: "Gin" },
@@ -373,6 +376,7 @@ const items = [
 { name: "OLMECA", price: 300, category: "Shot" },
 { name: "JOSE CUERVO", price: 300, category: "Shot" },
 
+
   
 
   
@@ -457,15 +461,16 @@ function renderMenu() {
   let hideDraftBeers = false;
 
   if (
-    (currentDayIndex === 4 && currentHour >= 18) ||
-    (currentDayIndex === 5 && currentHour >= 18)
+    (currentDayIndex === 3 && currentHour >= 18) || // Wednesday
+    (currentDayIndex === 4 && currentHour >= 18) || // Thursday
+    (currentDayIndex === 5 && currentHour >= 18)    // Friday
   ) {
     shouldFilter = true;
   }
 
   if (
-    (currentDayIndex === 6 && currentHour >= 22) ||
-    (currentDayIndex === 0 && currentHour < 5)
+    (currentDayIndex === 6 && currentHour >= 22) || // Saturday after 22:00
+    (currentDayIndex === 0 && currentHour < 5)      // Sunday before 05:00
   ) {
     shouldFilter = true;
     hideDraftBeers = true;
@@ -521,7 +526,7 @@ function renderMenu() {
       grouped[cat].forEach(({ name, price }) => {
         const div = document.createElement("div");
         div.className = "item";
-        div.innerHTML = <h4>${name}</h4><p>₺${price}</p>;
+        div.innerHTML = `<h4>${name}</h4><p>₺${price}</p>`;
         grid.appendChild(div);
       });
       container.appendChild(grid);
