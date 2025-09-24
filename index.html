@@ -461,18 +461,17 @@ function renderMenu() {
   let hideDraftBeers = false;
 
   if (
-    (currentDayIndex === 3 && currentHour >= 18) || // Wednesday
-    (currentDayIndex === 4 && currentHour >= 18) || // Thursday
-    (currentDayIndex === 5 && currentHour >= 18)    // Friday
+    (currentDayIndex === 4 && currentHour >= 18) || // Perşembe
+    (currentDayIndex === 6 && currentHour >= 22) || // Cumartesi 22:00+
+    (currentDayIndex === 0 && currentHour < 5)      // Pazar 05:00’a kadar
   ) {
     shouldFilter = true;
   }
 
   if (
-    (currentDayIndex === 6 && currentHour >= 22) || // Saturday after 22:00
-    (currentDayIndex === 0 && currentHour < 5)      // Sunday before 05:00
+    (currentDayIndex === 6 && currentHour >= 22) || // Cumartesi 22:00+
+    (currentDayIndex === 0 && currentHour < 5)      // Pazar 05:00’a kadar
   ) {
-    shouldFilter = true;
     hideDraftBeers = true;
   }
 
