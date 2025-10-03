@@ -391,17 +391,18 @@ function filterSoftAndHotDrinks() {
   let hideDraftBeers = false;
 
   if (
-    (currentDayIndex === 4 && currentHour >= 18) ||
-    (currentDayIndex === 5 && currentHour >= 18)
+    (currentDayIndex === 4 && currentHour >= 18) || // Perşembe 18:00+
+    (currentDayIndex === 5 && currentHour >= 18) || // Cuma 18:00+
+    (currentDayIndex === 6 && currentHour >= 22) || // Cumartesi 22:00+
+    (currentDayIndex === 0 && currentHour < 5)      // Pazar 05:00’a kadar
   ) {
     shouldFilter = true;
   }
 
   if (
-    (currentDayIndex === 6 && currentHour >= 22) ||
-    (currentDayIndex === 0 && currentHour < 5)
+    (currentDayIndex === 6 && currentHour >= 22) || // Cumartesi 22:00+
+    (currentDayIndex === 0 && currentHour < 5)      // Pazar 05:00’a kadar
   ) {
-    shouldFilter = true;
     hideDraftBeers = true;
   }
 
@@ -461,15 +462,16 @@ function renderMenu() {
 
   if (
     (currentDayIndex === 4 && currentHour >= 18) || // Perşembe
-    (currentDayIndex === 6 && currentHour >= 22) || // Cumartesi 22:00+
-    (currentDayIndex === 0 && currentHour < 5)      // Pazar 05:00’a kadar
+    (currentDayIndex === 5 && currentHour >= 18) || // Cuma
+    (currentDayIndex === 6 && currentHour >= 22) || // Cumartesi
+    (currentDayIndex === 0 && currentHour < 5)      // Pazar sabah
   ) {
     shouldFilter = true;
   }
 
   if (
-    (currentDayIndex === 6 && currentHour >= 22) || // Cumartesi 22:00+
-    (currentDayIndex === 0 && currentHour < 5)      // Pazar 05:00’a kadar
+    (currentDayIndex === 6 && currentHour >= 22) || // Cumartesi
+    (currentDayIndex === 0 && currentHour < 5)      // Pazar sabah
   ) {
     hideDraftBeers = true;
   }
@@ -524,7 +526,7 @@ function renderMenu() {
       grouped[cat].forEach(({ name, price }) => {
         const div = document.createElement("div");
         div.className = "item";
-        div.innerHTML = <h4>${name}</h4><p>₺${price}</p>;
+        div.innerHTML = `<h4>${name}</h4><p>₺${price}</p>`;
         grid.appendChild(div);
       });
       container.appendChild(grid);
