@@ -383,6 +383,392 @@ const items = [
 
 ];
 
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Homies Menü</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #fff;
+      margin: 0;
+      padding: 0;
+      color: #111;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      background: #fff;
+      z-index: 1100;
+      text-align: center;
+      padding: 0 0 0.3rem 0;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    header img {
+      max-height: 90px;
+      display: block;
+      margin: auto;
+    }
+    .sticky-controls {
+      position: sticky;
+      top: 90px;
+      background: #fff;
+      z-index: 1000;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+    .controls {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.5rem 0.5rem;
+    }
+    .controls select {
+      -webkit-appearance: none;  
+      -moz-appearance: none;    
+      appearance: none;          
+      background: #f9f9f9;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 0.5rem 2.5rem 0.5rem 0.5rem;
+      font-size: 1rem;
+      font-family: inherit;
+      color: #111;
+      background-image: url('data:image/svg+xml;utf8,<svg fill="%23666" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+      background-repeat: no-repeat;
+      background-position: right 0.75rem center;
+      background-size: 1rem;
+    }
+    .controls input, .controls select {
+      flex: 1;
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 1rem;
+    }
+    h2 {
+      margin-top: 2rem;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 0.5rem;
+    }
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1rem;
+    }
+    .item {
+      border: 1px solid #ddd;
+      padding: 1rem;
+      border-radius: 8px;
+      background: #f9f9f9;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <img src="homies-logo.png" alt="Homies Logo">
+</header>
+<div class="sticky-controls">
+  <div class="controls">
+    <input type="text" id="search" placeholder="Search">
+    <select id="category">
+      <option value="All">All</option>
+    </select>
+  </div>
+</div>
+<div class="container" id="menu"></div>
+
+<script>
+const items = [
+  { name: "TÜRK KAHVESİ", price: 150, category: "Coffees" },
+  { name: "ESPRESSO SHOT", price: 150, category: "Coffees" },
+  { name: "DOPIO", price: 170, category: "Coffees" },
+  { name: "AMERICANO", price: 170, category: "Coffees" },
+  { name: "CAPPUCINO", price: 190, category: "Coffees" },
+  { name: "FLAT WHITE", price: 190, category: "Coffees" },
+  { name: "MOCHA", price: 240, category: "Coffees" },
+  { name: "ICE AMERICANO", price: 200, category: "Coffees" },
+  { name: "ICE LATTE", price: 230, category: "Coffees" },
+  { name: "ESPRESSO TONIC", price: 220, category: "Coffees" },
+  { name: "CORTADO", price: 180, category: "Coffees" },
+  { name: "LATTE", price: 190, category: "Coffees" },
+  { name: "ICE MOCHA", price: 280, category: "Coffees" },
+  { name: "OJ ESPRESSO", price: 280, category: "Coffees" },
+{ name: "BİTKİSEL SÜT", price: 50, category: "Coffees" },
+{ name: "EKSTRA ŞURUP", price: 50, category: "Coffees" },
+  { name: "KIŞ ÇAYI", price: 150, category: "Coffees" },
+  { name: "YEŞİL ÇAY", price: 150, category: "Coffees" },
+  { name: "KEDİ DİLLİ TİRAMİSU", price: 250, category: "Desserts" },
+  { name: "LİMONLU CHEESECAKE", price: 250, category: "Desserts" },
+  { name: "ORMAN MEYVELİ TURTA", price: 250, category: "Desserts" },
+  { name: "ÇİKOLATALI PASTA", price: 290, category: "Desserts" },
+  { name: "CARLSBERG DRAFT 50cl", price: 270, category: "Beers" },
+  { name: "CARLSBERG DRAFT 33cl", price: 220, category: "Beers" },
+  { name: "TUBORG DRAFT 50cl", price: 250, category: "Beers" },
+  { name: "TUBORG DRAFT 33cl", price: 200, category: "Beers" },
+  { name: "BLANC DRAFT 50cl", price: 285, category: "Beers" },
+  { name: "BLANC DRAFT 33cl", price: 235, category: "Beers" },
+  { name: "BLANC", price: 300, category: "Beers" },
+  { name: "BUDWEISER BUDVAR", price: 350, category: "Beers" },
+  { name: "CARLSBERG 33 CL Bottle", price: 300, category: "Beers" },
+  { name: "DESPERADOS", price: 350, category: "Beers" },
+  { name: "FREDERIC INDIAN PALE ALE", price: 350, category: "Beers" },
+  { name: "FREDERIC WHEAT IPA", price: 350, category: "Beers" },
+  { name: "FREDERIC YAKIMA IPA", price: 350, category: "Beers" },
+{ name: "GUINNESS", price: 420, category: "Beers" },
+{ name: "HEINEKEN", price: 350, category: "Beers" },
+{ name: "SOL", price: 350, category: "Beers" },
+{ name: "TUBORG 33 CL Bottle", price: 300, category: "Beers" },
+{ name: "TUBORG ICE 33 CL Bottle", price: 300, category: "Beers" },
+{ name: "WEIHENSTEPHAN", price: 350, category: "Beers" },
+{ name: "WEIHENSTEPHAN VITUS", price: 400, category: "Beers" },
+{ name: "COCA COLA", price: 150, category: "Cold Beverages" },
+{ name: "COCA COLA ZERO", price: 150, category: "Cold Beverages" },
+{ name: "KROMBACHER ALKOLSÜZ", price: 250, category: "Cold Beverages" },
+{ name: "RED BULL", price: 200, category: "Cold Beverages" },
+{ name: "RED BULL ŞEKERSİZ", price: 200, category: "Cold Beverages" },
+{ name: "SPRITE", price: 150, category: "Cold Beverages" },
+{ name: "ULUDAĞ PREMIUM MADEN SUYU", price: 150, category: "Cold Beverages" },
+{ name: "ULUDAĞ PREMIUM SU", price: 50, category: "Cold Beverages" },
+{ name: "FRESH ORANGE JUICE", price: 250, category: "Cold Beverages" },
+{ name: "FUSE TEA LİMON", price: 150, category: "Cold Beverages" },
+{ name: "FUSE TEA ŞEFTALİ", price: 150, category: "Cold Beverages" },
+{ name: "THOMAS HENRY TONIC", price: 200, category: "Cold Beverages" },
+{ name: "SCHWEPPES TONIC", price: 150, category: "Cold Beverages" },
+  { name: "TUZLU FISTIK", price: 150, category: "Lil' Bites" },
+{ name: "ZEYTİN TABAĞI", price: 150, category: "Lil' Bites" },
+{ name: "AMARETTO SOUR", price: 650, category: "Cocktails" },
+{ name: "APEROL SPRITZ", price: 600, category: "Cocktails" },
+{ name: "BLOODY MARY", price: 650, category: "Cocktails" },
+{ name: "BOULEVARDIER", price: 700, category: "Cocktails" },
+{ name: "CAMPARI ORANGE", price: 600, category: "Cocktails" },
+{ name: "CAMPARI SPRITZ", price: 700, category: "Cocktails" },
+{ name: "CUBA LIBRE", price: 600, category: "Cocktails" },
+{ name: "DAIQUIRI", price: 600, category: "Cocktails" },
+{ name: "ESPRESSO MARTINI", price: 650, category: "Cocktails" },
+{ name: "FRENCH 75", price: 650, category: "Cocktails" },
+{ name: "GIN BASIL SMASH", price: 650, category: "Cocktails" },
+{ name: "JAGER BOMB", price: 550, category: "Cocktails" },
+{ name: "LONG ISLAND ICED TEA", price: 750, category: "Cocktails" },
+{ name: "LYNCHBURG LEMONADE", price: 750, category: "Cocktails" },
+{ name: "MAI TAI", price: 750, category: "Cocktails" },
+{ name: "MANHATTAN", price: 650, category: "Cocktails" },
+{ name: "MARGARITA", price: 700, category: "Cocktails" },
+{ name: "MARTINI", price: 650, category: "Cocktails" },
+{ name: "MEZCAL MARGARITA", price: 750, category: "Cocktails" },
+{ name: "MOJITO", price: 650, category: "Cocktails" },
+{ name: "NEGRONI", price: 680, category: "Cocktails" },
+{ name: "NY SOUR", price: 650, category: "Cocktails" },
+{ name: "OLD FASHIONED", price: 650, category: "Cocktails" },
+{ name: "PALOMA", price: 650, category: "Cocktails" },
+{ name: "PARKSIDE FIZZ", price: 650, category: "Cocktails" },
+{ name: "PORNSTAR MARTINI", price: 680, category: "Cocktails" },
+{ name: "SCREWDRIVER", price: 600, category: "Cocktails" },
+{ name: "TOM COLLINS", price: 600, category: "Cocktails" },
+{ name: "WHISKEY SOUR", price: 650, category: "Cocktails" },
+{ name: "WHITE RUSSIAN", price: 600, category: "Cocktails" },
+{ name: "SUPREME MARTINI", price: 670, category: "Artisan Cocktails" },
+{ name: "RUMIES SOUR", price: 670, category: "Artisan Cocktails" },
+{ name: "KUZU KULAĞI", price: 650, category: "Artisan Cocktails" },
+{ name: "KUZU V2.0", price: 650, category: "Artisan Cocktails" },
+{ name: "PEANAUGHTY", price: 700, category: "Artisan Cocktails" },
+{ name: "PINA BLANCO", price: 670, category: "Artisan Cocktails" },
+{ name: "TEDDY PEAR", price: 650, category: "Artisan Cocktails" },
+{ name: "CHEESECAKE", price: 670, category: "Artisan Cocktails" },
+  { name: "HEAVY BISCUIT", price: 670, category: "Artisan Cocktails" },
+{ name: "YUZU MEZCAL MARGARITA", price: 750, category: "Artisan Cocktails" },
+  { name: "BİR VARMIŞ BİR YOKMUŞ WHITE (Bottle)", price: 3500, category: "Wine & Prosecco" },
+{ name: "ÇAL ROSE (Bottle)", price: 3500, category: "Wine & Prosecco" },
+{ name: "KAYNAKLAR RED (Bottle)", price: 4000, category: "Wine & Prosecco" },
+{ name: "SULTANİYE WHITE", price: 400, category: "Wine & Prosecco" },
+{ name: "SULTANİYE WHITE (Bottle)", price: 2000, category: "Wine & Prosecco" },
+{ name: "ÇALKARASI ROZE", price: 400, category: "Wine & Prosecco" },
+{ name: "ÇALKARASI ROZE (Bottle)", price: 2000, category: "Wine & Prosecco" },
+{ name: "CABARNET KARASAKIZ RED", price: 400, category: "Wine & Prosecco" },
+{ name: "CABARNET KARASAKIZ RED (Bottle)", price: 2000, category: "Wine & Prosecco" },
+{ name: "TALLERO", price: 400, category: "Wine & Prosecco" },
+{ name: "MOET & CHANDON IMPERIAL (Bottle)", price: 10000, category: "Wine & Prosecco" },
+{ name: "CINZANO PROSECCO", price: 5500, category: "Wine & Prosecco" },
+{ name: "7 BİLGELER ANAXAGORAS 2024 CHARDONNAY (Bottle)", price: 3500, category: "Wine & Prosecco" },
+{ name: "7 BİLGELER LASOS 2024 KARASAKIZ (Bottle)", price: 3500, category: "Wine & Prosecco" },
+{ name: "7 BİLGELER PITTAKOS 2022 CABERNET SAUVIGNON, MERLOT (Bottle)", price: 3500, category: "Wine & Prosecco" },
+  { name: "BEEFEATER", price: 500, category: "Gin" },
+{ name: "BEEFEATER BLOOD ORANGE", price: 500, category: "Gin" },
+{ name: "BEEFEATER PINK", price: 500, category: "Gin" },
+{ name: "BOMBAY", price: 540, category: "Gin" },
+{ name: "BOMBAY SAPHIRE PREMIER", price: 750, category: "Gin" },
+{ name: "BULLDOG", price: 550, category: "Gin" },
+{ name: "FORDS GIN", price: 550, category: "Gin" },
+{ name: "GIN MARE", price: 750, category: "Gin" },
+{ name: "GORDON'S", price: 500, category: "Gin" },
+{ name: "GORDON'S PINK", price: 500, category: "Gin" },
+{ name: "GUNPOWDER CALIFORNIAN ORANGE", price: 750, category: "Gin" },
+{ name: "GUNPOWDER SARDINIAN CITRUS", price: 750, category: "Gin" },
+{ name: "HENDRICK'S", price: 700, category: "Gin" },
+{ name: "HENDRICK'S FLORA ADORA", price: 740, category: "Gin" },
+{ name: "HENDRICK'S ORBIUM", price: 740, category: "Gin" },
+{ name: "JUNIPER BIRD SCHIEDAM DRY", price: 990, category: "Gin" },
+{ name: "MALFY CON LIMONE", price: 600, category: "Gin" },
+{ name: "MALFY GIN ORIGINALE", price: 600, category: "Gin" },
+{ name: "MALFY GIN ROSA", price: 600, category: "Gin" },
+{ name: "MONKEY 47", price: 670, category: "Gin" },
+{ name: "NIKKA COFFEY GIN", price: 750, category: "Gin" },
+{ name: "OPIHR", price: 650, category: "Gin" },
+{ name: "ROKU", price: 670, category: "Gin" },
+{ name: "TANQUERAY", price: 550, category: "Gin" },
+{ name: "TANQUERAY NO:10", price: 700, category: "Gin" },
+{ name: "TANQUERAY SEVILLA", price: 600, category: "Gin" },
+{ name: "THE LONDON NO:1", price: 650, category: "Gin" },
+{ name: "WOLFREST DRY", price: 1100, category: "Gin" },
+{ name: "ABSOLUT", price: 500, category: "Vodka" },
+{ name: "ABSOLUT CITRON", price: 500, category: "Vodka" },
+{ name: "ABSOLUT MANDARIN", price: 500, category: "Vodka" },
+{ name: "ABSOLUT PEARS", price: 500, category: "Vodka" },
+{ name: "ABSOLUT RASPBERRY", price: 500, category: "Vodka" },
+{ name: "ABSOLUT VANILLA", price: 500, category: "Vodka" },
+{ name: "BELUGA NOBLE", price: 850, category: "Vodka" },
+{ name: "ELIT EIGHTEEN", price: 900, category: "Vodka" },
+{ name: "GREY GOOSE", price: 900, category: "Vodka" },
+{ name: "HAKU", price: 800, category: "Vodka" },
+{ name: "SMIRNOFF", price: 470, category: "Vodka" },
+{ name: "STOLICHNAYA", price: 470, category: "Vodka" },
+{ name: "TITO'S", price: 750, category: "Vodka" },
+{ name: "ABERLOUR 12 Y.O.", price: 850, category: "Whisky" },
+{ name: "AUCHENTOSHAN 12 Y.O.", price: 600, category: "Whisky" },
+{ name: "BENRIACH SMOKEY", price: 750, category: "Whisky" },
+{ name: "BULLEIT BOURBON", price: 700, category: "Whisky" },
+{ name: "CHIVAS EXTRA SMOKY", price: 700, category: "Whisky" },
+{ name: "CHIVAS REGAL 12 Y.O.", price: 500, category: "Whisky" },
+  { name: "CHIVAS REGAL 18 Y.O.", price: 1000, category: "Whisky" },
+{ name: "DIMPLE GOLDEN", price: 500, category: "Whisky" },
+{ name: "ELIJAH CRAIG SMALL BATCH BOURBON", price: 900, category: "Whisky" },
+{ name: "GENTLEMAN JACK", price: 650, category: "Whisky" },
+{ name: "GLENDRONACH", price: 1100, category: "Whisky" },
+{ name: "BUSHMILLS", price: 500, category: "Whisky" },
+{ name: "GLENFARCLAS 12 Y.O.", price: 1100, category: "Whisky" },
+{ name: "GLENFIDDICH", price: 750, category: "Whisky" },
+{ name: "GLENLIVET FOUNDERS", price: 700, category: "Whisky" },
+{ name: "GLENLIVET 15 Y.O.", price: 1100, category: "Whisky" },
+{ name: "J.W. AGED 18 Y.O.", price: 950, category: "Whisky" },
+{ name: "J.W. BLACK LABEL", price: 550, category: "Whisky" },
+{ name: "J.W. BLUE LABEL", price: 2600, category: "Whisky" },
+{ name: "J.W. DOUBLE BLACK", price: 700, category: "Whisky" },
+{ name: "J.W. GOLD LABEL", price: 850, category: "Whisky" },
+{ name: "MACALLAN DOUBLE CASK 12 Y.O.", price: 1200, category: "Whisky" },
+{ name: "MONKEY SHOULDER", price: 700, category: "Whisky" },
+{ name: "WOODFORD RESERVE", price: 750, category: "Whisky" },
+  { name: "JACK DANIELS HONEY", price: 550, category: "Whisky" },
+  { name: "JACK DANIELS", price: 550, category: "Whisky" },
+  { name: "JACK DANIELS SINGLE B.", price: 850, category: "Whisky" },
+  { name: "JAMESON", price: 550, category: "Whisky" },
+  { name: "JAMESON BLACK BARREL", price: 600, category: "Whisky" },
+  { name: "JIM BEAM", price: 500, category: "Whisky" },
+  { name: "LAGAVULIN", price: 1200, category: "Whisky" },
+  { name: "MICHTERS BOURBON", price: 1200, category: "Whisky" },
+  { name: "MORTLACH SPECIAL 12 YO", price: 950, category: "Whisky" },
+  { name: "MORTLACH SPECIAL 16YO", price: 1600, category: "Whisky" },
+  { name: "NAKED MALT", price: 500, category: "Whisky" },
+  { name: "SINGLETON 12YO", price: 600, category: "Whisky" },
+  { name: "TEELING", price: 900, category: "Whisky" },
+  { name: "TULLAMORE DEW", price: 500, category: "Whisky" },
+  { name: "WOODFORD RESERVE RYE", price: 800, category: "Whisky" },
+{ name: "MAKER'S MARK", price: 750, category: "Whisky" },
+{ name: "NIKKA COFFEY GRAIN", price: 950, category: "Whisky" },
+{ name: "NIKKA COFFEY MALT", price: 950, category: "Whisky" },
+{ name: "NIKKA DAYS", price: 750, category: "Whisky" },
+{ name: "NIKKA FROM BARREL", price: 800, category: "Whisky" },
+{ name: "AMARAS MEZCAL", price: 1100, category: "Tequila & Mezcal" },
+{ name: "AZUL REPOSADO (Bottle)", price: 39000, category: "Tequila & Mezcal" },
+{ name: "CASAMIGOS ANEJO", price: 700, category: "Tequila & Mezcal" },
+{ name: "CASAMIGOS BLANCO", price: 650, category: "Tequila & Mezcal" },
+{ name: "CASAMIGOS MEZCAL", price: 720, category: "Tequila & Mezcal" },
+{ name: "CASAMIGOS REPOSADO", price: 700, category: "Tequila & Mezcal" },
+{ name: "DON JULIO 1942 (Bottle)", price: 38000, category: "Tequila & Mezcal" },
+{ name: "DON JULIO ANEJO", price: 700, category: "Tequila & Mezcal" },
+{ name: "DON JULIO BLANCO", price: 600, category: "Tequila & Mezcal" },
+{ name: "ILEGAL MEZCAL JOVEN", price: 700, category: "Tequila & Mezcal" },
+{ name: "OJO DE TIGRE JOVEN", price: 700, category: "Tequila & Mezcal" },
+{ name: "OJO DE TIGRE REPOSADO", price: 800, category: "Tequila & Mezcal" },
+{ name: "PATRON SILVER", price: 700, category: "Tequila & Mezcal" },
+{ name: "SE BUSCA JOVEN", price: 850, category: "Tequila & Mezcal" },
+{ name: "CINZANO BIANCO", price: 650, category: "Vermouth" },
+{ name: "CINZANO EXTRA DRY", price: 650, category: "Vermouth" },
+{ name: "CINZANO ROSSO", price: 650, category: "Vermouth" },
+{ name: "GARRONE BIANCO", price: 600, category: "Vermouth" },
+{ name: "GARRONE DRY", price: 600, category: "Vermouth" },
+{ name: "GARRONE ROSSO", price: 600, category: "Vermouth" },
+{ name: "MARTINI BIANCO", price: 650, category: "Vermouth" },
+{ name: "MARTINI EXTRA DRY", price: 650, category: "Vermouth" },
+{ name: "MARTINI FIERRO", price: 690, category: "Vermouth" },
+{ name: "OTTO'S", price: 750, category: "Vermouth" },
+{ name: "ANGOSTURA 3 YEARS OLD RESERVS WHITE RUM", price: 500, category: "Rum" },
+{ name: "BACARDI", price: 550, category: "Rum" },
+{ name: "BUMBU", price: 590, category: "Rum" },
+{ name: "CAPTAIN MORGAN", price: 500, category: "Rum" },
+{ name: "CAPTAIN MORGAN GOLD", price: 500, category: "Rum" },
+{ name: "HAVANA CLB ANEJO 3 ANOS", price: 550, category: "Rum" },
+{ name: "PLANTATION 3 STARS", price: 550, category: "Rum" },
+{ name: "PLANTATION ISLE OF FIJI", price: 650, category: "Rum" },
+{ name: "PLANTATION ORIGINAL DARK", price: 550, category: "Rum" },
+{ name: "RON ZACAPA", price: 750, category: "Rum" },
+{ name: "COURVOSIER VSPO", price: 950, category: "Cognac" },
+{ name: "MARTELL", price: 850, category: "Cognac" },
+{ name: "JAGERMEISTER", price: 300, category: "Shot" },
+{ name: "SKINOS", price: 300, category: "Shot" },
+{ name: "SKINOS DARK", price: 300, category: "Shot" },
+{ name: "STOLICHNAYA SALTED KARAMEL", price: 300, category: "Shot" },
+{ name: "BAILEY'S", price: 500, category: "Licor" },
+{ name: "BATI DE COCO", price: 450, category: "Licor" },
+{ name: "BOLS CREME DE CASSIS", price: 450, category: "Licor" },
+{ name: "BOTTEGA MELONCINO", price: 450, category: "Licor" },
+{ name: "BOTTEGA NERO", price: 450, category: "Licor" },
+{ name: "BOTTEGA PISTACCHIO", price: 450, category: "Licor" },
+{ name: "CARDINAL MELON", price: 450, category: "Licor" },
+{ name: "CHAMBORD", price: 450, category: "Licor" },
+{ name: "COINTREAU", price: 650, category: "Licor" },
+{ name: "DISARONNO AMARETTO", price: 500, category: "Licor" },
+{ name: "HAKUSHIKA JUNMAI GINJO SAKE", price: 600, category: "Licor" },
+{ name: "DRAMBUIE", price: 600, category: "Licor" },
+{ name: "FERNET BRANCA", price: 450, category: "Licor" },
+{ name: "FRENGELICO", price: 500, category: "Licor" },
+{ name: "GRAND MARNIER", price: 850, category: "Licor" },
+{ name: "KAHLUA", price: 450, category: "Licor" },
+{ name: "LICOR 43", price: 500, category: "Licor" },
+{ name: "LUXARDO AMARETTO DI SASCHIRA", price: 450, category: "Licor" },
+{ name: "LUXARDO MARASCHINO ORGINALE", price: 500, category: "Licor" },
+{ name: "LUXARDO SOUR APPLE", price: 450, category: "Licor" },
+{ name: "LUXARDO TRIPLE SEC", price: 500, category: "Licor" },
+{ name: "MALIBU", price: 450, category: "Licor" },
+{ name: "PASSOA", price: 450, category: "Licor" },
+{ name: "RAMAZZOTTI AMARO", price: 500, category: "Licor" },
+{ name: "SAFARI", price: 450, category: "Licor" },
+{ name: "RAMAZZOTTI APERATIVO", price: 450, category: "Licor" },
+{ name: "SOUTHERN COMFORT", price: 500, category: "Licor" },
+{ name: "ST. GERMAIN", price: 650, category: "Licor" },
+{ name: "TIA MARIA", price: 450, category: "Licor" },
+{ name: "BABY GUINNESS", price: 300, category: "Shot" },
+{ name: "VILLA MASA LIMONCELLO", price: 450, category: "Licor" },
+{ name: "FIREBALL", price: 300, category: "Shot" },
+{ name: "OLMECA", price: 300, category: "Shot" },
+{ name: "JOSE CUERVO", price: 300, category: "Shot" },
+
+
+  
+
+  
+
+];
+
+
 function filterSoftAndHotDrinks() {
   const now = new Date();
   const currentHour = now.getHours();
@@ -392,17 +778,18 @@ function filterSoftAndHotDrinks() {
   let hideDraftBeers = false;
 
   if (
-    (currentDayIndex === 4 && currentHour >= 18) ||
-    (currentDayIndex === 5 && currentHour >= 18)
+    (currentDayIndex === 4 && currentHour >= 18) || // Perşembe
+    (currentDayIndex === 5 && currentHour >= 18) || // Cuma
+    (currentDayIndex === 6 && currentHour >= 22) || // Cumartesi 22:00+
+    (currentDayIndex === 0 && currentHour < 5)      // Pazar 05:00’a kadar
   ) {
     shouldFilter = true;
   }
 
   if (
-    (currentDayIndex === 6 && currentHour >= 22) ||
-    (currentDayIndex === 0 && currentHour < 5)
+    (currentDayIndex === 6 && currentHour >= 22) || // Cumartesi 22:00+
+    (currentDayIndex === 0 && currentHour < 5)      // Pazar 05:00’a kadar
   ) {
-    shouldFilter = true;
     hideDraftBeers = true;
   }
 
@@ -462,6 +849,7 @@ function renderMenu() {
 
   if (
     (currentDayIndex === 4 && currentHour >= 18) || // Perşembe
+    (currentDayIndex === 5 && currentHour >= 18) || // Cuma
     (currentDayIndex === 6 && currentHour >= 22) || // Cumartesi 22:00+
     (currentDayIndex === 0 && currentHour < 5)      // Pazar 05:00’a kadar
   ) {
