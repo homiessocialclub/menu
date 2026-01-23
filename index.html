@@ -406,7 +406,7 @@ function filterSoftAndHotDrinks() {
   const orderedCategories = [
     "All", "Artisan Cocktails", "Cocktails", "Gin", "Whisky", "Vodka",
     "Tequila & Mezcal", "Vermouth", "Rum", "Cognac", "Licor", "Wine & Prosecco",
-    "Beers", "Coffees", "Cold Beverages", "Desserts", "Lil' Bites", "Shot"
+    "Beers", "Coffees", "Cold Beverages", "Lil' Bites", "Shot"
   ];
 
   categorySelect.innerHTML = "";
@@ -416,7 +416,7 @@ function filterSoftAndHotDrinks() {
     option.value = cat;
     option.textContent = cat;
 
-    if (shouldFilter && ["Cold Beverages", "Coffees", "Desserts"].includes(cat)) {
+    if (shouldFilter && ["Cold Beverages", "Coffees"].includes(cat)) {
       option.style.display = "none";
     }
 
@@ -445,7 +445,8 @@ function renderMenu() {
     hideDraftBeers = true;
   }
 
-  const hiddenCategories = shouldFilter ? ["Cold Beverages", "Coffees", "Desserts"] : [];
+  const hiddenCategories = ["Desserts"];
+  if (shouldFilter) hiddenCategories.push("Cold Beverages", "Coffees");
 
   const grouped = {};
   items.forEach(item => {
