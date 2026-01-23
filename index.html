@@ -5,24 +5,93 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Homies Menü</title>
   <style>
-    body { font-family: sans-serif; background: #fff; margin: 0; color:#111 }
-    header { position: sticky; top:0; background:#fff; z-index:1100; text-align:center; box-shadow:0 2px 4px rgba(0,0,0,.05) }
-    header img { max-height:90px; margin:auto; display:block }
-    .sticky-controls { position:sticky; top:90px; background:#fff; z-index:1000; box-shadow:0 2px 4px rgba(0,0,0,.05) }
-    .controls { max-width:900px; margin:auto; display:flex; gap:1rem; padding:.5rem }
-    .controls input,.controls select { flex:1; padding:.5rem; font-size:1rem }
-    .container { max-width:900px; margin:auto; padding:1rem }
-    h2 { margin-top:2rem; border-bottom:1px solid #ccc; padding-bottom:.5rem }
-    .menu-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:1rem }
-    .item { border:1px solid #ddd; padding:1rem; border-radius:8px; background:#f9f9f9 }
+    body {
+      font-family: sans-serif;
+      background: #fff;
+      margin: 0;
+      padding: 0;
+      color: #111;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      background: #fff;
+      z-index: 1100;
+      text-align: center;
+      padding: 0 0 0.3rem 0;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    header img {
+      max-height: 90px;
+      display: block;
+      margin: auto;
+    }
+    .sticky-controls {
+      position: sticky;
+      top: 90px;
+      background: #fff;
+      z-index: 1000;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+    .controls {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.5rem 0.5rem;
+    }
+    .controls select {
+      -webkit-appearance: none;  
+      -moz-appearance: none;    
+      appearance: none;          
+      background: #f9f9f9;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 0.5rem 2.5rem 0.5rem 0.5rem;
+      font-size: 1rem;
+      font-family: inherit;
+      color: #111;
+      background-image: url('data:image/svg+xml;utf8,<svg fill="%23666" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+      background-repeat: no-repeat;
+      background-position: right 0.75rem center;
+      background-size: 1rem;
+    }
+    .controls input, .controls select {
+      flex: 1;
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 1rem;
+    }
+    h2 {
+      margin-top: 2rem;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 0.5rem;
+    }
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1rem;
+    }
+    .item {
+      border: 1px solid #ddd;
+      padding: 1rem;
+      border-radius: 8px;
+      background: #f9f9f9;
+    }
+    .hidden {
+      display: none;
+    }
   </style>
 </head>
 <body>
-
 <header>
   <img src="homies-logo.png" alt="Homies Logo">
 </header>
-
 <div class="sticky-controls">
   <div class="controls">
     <input type="text" id="search" placeholder="Search">
@@ -31,7 +100,6 @@
     </select>
   </div>
 </div>
-
 <div class="container" id="menu"></div>
 
 <script>
@@ -334,17 +402,25 @@ function filterSoftAndHotDrinks() {
   }
 
   const categorySelect = document.getElementById("category");
-  const orderedCategories = ["All","Artisan Cocktails","Cocktails","Gin","Whisky","Beers","Coffees","Cold Beverages","Desserts"];
+
+  const orderedCategories = [
+    "All", "Artisan Cocktails", "Cocktails", "Gin", "Whisky", "Vodka",
+    "Tequila & Mezcal", "Vermouth", "Rum", "Cognac", "Licor", "Wine & Prosecco",
+    "Beers", "Coffees", "Cold Beverages", "Desserts", "Lil' Bites", "Shot"
+  ];
+
   categorySelect.innerHTML = "";
 
   orderedCategories.forEach(cat => {
-    const opt = document.createElement("option");
-    opt.value = cat;
-    opt.textContent = cat;
-    if (shouldFilter && ["Cold Beverages","Coffees","Desserts"].includes(cat)) {
-      opt.style.display = "none";
+    const option = document.createElement("option");
+    option.value = cat;
+    option.textContent = cat;
+
+    if (shouldFilter && ["Cold Beverages", "Coffees", "Desserts"].includes(cat)) {
+      option.style.display = "none";
     }
-    categorySelect.appendChild(opt);
+
+    categorySelect.appendChild(option);
   });
 
   window._homiesFilterFlags = { shouldFilter, hideDraftBeers };
@@ -369,11 +445,12 @@ function renderMenu() {
     hideDraftBeers = true;
   }
 
-  const hiddenCategories = shouldFilter ? ["Cold Beverages","Coffees","Desserts"] : [];
-  const grouped = {};
+  const hiddenCategories = shouldFilter ? ["Cold Beverages", "Coffees", "Desserts"] : [];
 
+  const grouped = {};
   items.forEach(item => {
     const isDraft = item.category === "Beers" && item.name.toUpperCase().includes("DRAFT");
+
     if (
       !hiddenCategories.includes(item.category) &&
       !(hideDraftBeers && isDraft) &&
@@ -392,12 +469,14 @@ function renderMenu() {
 
     const grid = document.createElement("div");
     grid.className = "menu-grid";
+
     grouped[cat].forEach(i => {
       const div = document.createElement("div");
       div.className = "item";
       div.innerHTML = `<h4>${i.name}</h4><p>₺${i.price}</p>`;
       grid.appendChild(div);
     });
+
     container.appendChild(grid);
   });
 }
@@ -408,5 +487,3 @@ document.getElementById("category").addEventListener("change", renderMenu);
 filterSoftAndHotDrinks();
 renderMenu();
 </script>
-</body>
-</html>
